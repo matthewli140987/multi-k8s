@@ -1,0 +1,24 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t matthewli1409/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run matthewli1409/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t matthewli1409/multi-client ./client
+  - docker build -t matthewli1409/multi-nginx ./nginx
+  - docker build -t matthewli1409/multi-server ./server
+  - docker build -t matthewli1409/multi-worker ./worker
+
+  # Log into docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  # Taake those images and push them to docker hub
+  - docker push matthewli1409/multi-client
+  - docker push matthewli1409/multi-nginx
+  - docker push matthewli1409/multi-server
+  - docker push matthewli1409/multi-worker
