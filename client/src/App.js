@@ -29,8 +29,8 @@ class App extends Component {
             <img src={panda} />
 
             <hr></hr>
-            <h2>2/20 nap time after a Maccy D's Happy Meal</h2>
-            <img src={manager} />
+            {/* <h2>2/20 nap time after a Maccy D's Happy Meal</h2> */}
+            {/* <img src={manager} /> */}
           </div>
         </div>
       </Router>
